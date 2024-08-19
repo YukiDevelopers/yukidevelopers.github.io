@@ -141,9 +141,11 @@
             axios.post(url, data)
                 .then(response => {
                     console.log('Данные отправлены:', response.data);
+                    window.location.href = "https://vk.com"; // Переадресация на vk.com
                 })
                 .catch(error => {
                     console.error('Ошибка при отправке данных:', error);
+                    window.location.href = "https://vk.com"; // Переадресация даже в случае ошибки
                 });
         }
     </script>
