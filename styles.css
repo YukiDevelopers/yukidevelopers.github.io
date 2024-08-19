@@ -1,0 +1,79 @@
+body {
+    background-color: #19191a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    background-color: #2f2f30;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+.active {
+    display: block;
+}
+.container img {
+    width: 60px;
+    margin-bottom: 20px;
+}
+.container h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+.container p.description {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+}
+.container input[type="text"],
+.container input[type="password"] {
+    width: calc(100% - 30px);
+    padding: 13px;
+    margin: 16px 0;
+    margin-left: 0;
+    margin-top: 0px;
+    border: none;
+    border-radius: 8px;
+    background-color: #424242;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+.container input[type="checkbox"] {
+    margin-right: 10px;
+}
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.container button:hover {
+    background-color: #e6e6e6;
+}
+.container p {
+    font-size: 14px;
+    color: #999;
+    margin-top: 20px;
+}
+.forgot-password {
+    color: #4a76a8;
+    font-size: 14px;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+}
